@@ -1,0 +1,111 @@
+<script>
+    const signupsGoal = 30000; // The Goal for signups
+       document.addEventListener("DOMContentLoaded", function () {
+            jQuery.ajax({url: "https://link_da_api/",}).done(function (data) {
+                const counterValue = Number(data.unique_count);
+                let counterValueTxt;
+                let signupsGoalTxt;
+                if (counterValue >= 1000) {
+                  counterValueTxt = counterValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                } 
+                
+                else {
+                  counterValueTxt = counterValue.toString();
+                }
+                if (signupsGoal >= 100) {
+                  signupsGoalTxt = signupsGoal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                } else {
+                  signupsGoalTxt = signupsGoal.toString();
+                }
+                remainingsignup = signupsGoal - counterValue;
+  
+                if (jQuery(".number_of_signups").length > 0) {
+                  jQuery(".number_of_signups").attr(
+                    "aria-valuenow",
+                    counterValue
+                  );
+                  jQuery("#goalNumberSignups").text(signupsGoalTxt);
+                  jQuery("#currentNumberSignups").text(counterValueTxt);
+                  jQuery("#remainingtNumberSignups").text(remainingsignup);
+                  jQuery(".number_of_signups").attr("aria-valuemax", signupsGoal);
+                  jQuery(".number_of_signups").attr(
+                    "title",
+                    "Objetivo da petição: " + signupsGoal
+                  );
+                  jQuery(".number_of_signups").css("width",(counterValue / signupsGoal) * 100 + "%");}}).fail((jqXHR, textStatus, errorThrown) => {console.error(
+                  "Please adapt the code to get data from your own petition counter API"
+                );
+              });
+          });
+      // List ID in Hubspot
+      const signupsGoalInit = 30000; // Your petition goal
+    </script>
+    <div class="progress-bar">
+      <p class="progress-bar-title">
+        <span id="currentNumberSignups"></span> pessoas já assinaram
+      </p>
+      <div class="progress-bar-total">
+        <div class="progress-bar-completed number_of_signups" style="width: 0%" aria-valuemin="0" role="progressbar"></div>
+      </div>
+      <p class="progress-bar-description">
+      </p>
+    </div>
+  
+    <style>
+  .progress-bar {
+    margin-bottom: 16px;
+  }
+  
+  .progress-bar-title,
+  .progress-bar-description {
+    font-size: 16px;
+    line-height: 1.2;
+    font-weight: 700;
+  }
+  
+  .progress-bar-description {
+    color: #979797;
+    margin: 0;
+  }
+  
+  .progress-bar-total,
+  .progress-bar-completed {
+    height: 32px;
+    border-radius: 32px;
+  }
+  
+  .progress-bar-total {
+    position: relative;
+    width: 100%;
+    background: rgba(255,255,255,0.8);
+    margin: 16px 0;
+    border: 1px solid #000;
+  }
+  
+  .progress-bar-completed {
+    position: absolute;
+    background-image: url(https://www.greenpeace.org.br/hubfs/todos-pela-amazonia/bg-contador-barra.png);
+    background-size: 100%;
+  }
+  
+  @media (min-width: 768px) {
+    .progress-bar-title {
+      margin-top: 0;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .progress-bar-title {
+      font-size: 16px;
+    }
+  }
+      #classicCounter {
+        height: 25px;
+      }
+  
+      #classicCounter .number_of_signups {
+        background-color: #66cc00;
+        color: #ffffff;
+        font-weight: 700;
+      }
+    </style>
